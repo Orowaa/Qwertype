@@ -1,4 +1,4 @@
-function afficherResultat(score, nombreMotsProposes) {
+/*function afficherResultat(score, nombreMotsProposes) {
   console.log("Votre score est de " + score + " / " + nombreMotsProposes);
 }
 
@@ -42,4 +42,4 @@ function lancerJeu() {
   }
   afficherResultat(score, nombreMotsProposes);
 }
-
+*/
