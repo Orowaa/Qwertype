@@ -11,6 +11,8 @@ const listeMots = [
   "Web",
   "Zéro",
 ];
+
+
 const listePhrases = [
   "La Bohême !",
   "Vers l'infini et au delà",
