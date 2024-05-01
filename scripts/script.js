@@ -52,12 +52,13 @@ function validerEmail(email) {
     throw new Error("L'email n'est pas valide");
   }
 }
+
 function afficherMessageErreur(message) {
   let spanErreurMessage = document.getElementById("erreurMessage");
 
   if (!spanErreurMessage) {
-    let popup = document.querySelector("popup");
-    let spanErreurMessage = document.createElement("span");
+    let popup = document.querySelector(".popup");
+    spanErreurMessage = document.createElement("span");
     spanErreurMessage.id = "erreurMessage";
 
     popup.append(spanErreurMessage);
@@ -77,64 +78,65 @@ function gererFormulaire(scoreEmail) {
     afficherMessageErreur("");
     afficherEmail(nom, email, scoreEmail);
   } catch (erreur) {
+    // gestion d'erreurs
     afficherMessageErreur(erreur.message);
   }
+}
 
-  /**
-   * Cette fonction lance le jeu.
-   * Elle demande à l'utilisateur de choisir entre "mots" et "phrases" et lance la boucle de jeu correspondante
-   */
-  function lancerJeu() {
-    // Initialisations
-    initAddEventListenerPopup();
-    let score = 0;
-    let i = 0;
-    let listeProposition = listeMots;
+/**
+ * Cette fonction lance le jeu.
+ * Elle demande à l'utilisateur de choisir entre "mots" et "phrases" et lance la boucle de jeu correspondante
+ */
+function lancerJeu() {
+  // Initialisations
+  initAddEventListenerPopup();
+  let score = 0;
+  let i = 0;
+  let listeProposition = listeMots;
 
-    let btnValiderMot = document.getElementById("btnValiderMot");
-    let inputEcriture = document.getElementById("inputEcriture");
+  let btnValiderMot = document.getElementById("btnValiderMot");
+  let inputEcriture = document.getElementById("inputEcriture");
 
-    afficherProposition(listeProposition[i]);
+  afficherProposition(listeProposition[i]);
 
-    // Gestion de l'événement click sur le bouton "valider"
-    btnValiderMot.addEventListener("click", () => {
-      if (inputEcriture.value === listeProposition[i]) {
-        score++;
-      }
-      i++;
-      afficherResultat(score, i);
-      inputEcriture.value = "";
-      if (listeProposition[i] === undefined) {
-        afficherProposition("Le jeu est fini");
-        btnValiderMot.disabled = true;
-      } else {
-        afficherProposition(listeProposition[i]);
-      }
-    });
-
-    // Gestion de l'événement change sur les boutons radios.
-    let listeBtnRadio = document.querySelectorAll(".optionSource input");
-    for (let index = 0; index < listeBtnRadio.length; index++) {
-      listeBtnRadio[index].addEventListener("change", (event) => {
-        // Si c'est le premier élément qui a été modifié, alors nous voulons
-        // jouer avec la listeMots.
-        if (event.target.value === "1") {
-          listeProposition = listeMots;
-        } else {
-          // Sinon nous voulons jouer avec la liste des phrases
-          listeProposition = listePhrases;
-        }
-        // Et on modifie l'affichage en direct.
-        afficherProposition(listeProposition[i]);
-      });
+  // Gestion de l'événement click sur le bouton "valider"
+  btnValiderMot.addEventListener("click", () => {
+    if (inputEcriture.value === listeProposition[i]) {
+      score++;
     }
-    let form = document.querySelector("form");
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      let scoreEmail = `${score} / ${i}`;
-      gererFormulaire(scoreEmail);
-    });
-
+    i++;
     afficherResultat(score, i);
+    inputEcriture.value = "";
+    if (listeProposition[i] === undefined) {
+      afficherProposition("Le jeu est fini");
+      btnValiderMot.disabled = true;
+    } else {
+      afficherProposition(listeProposition[i]);
+    }
+  });
+
+  // Gestion de l'événement change sur les boutons radios.
+  let listeBtnRadio = document.querySelectorAll(".optionSource input");
+  for (let index = 0; index < listeBtnRadio.length; index++) {
+    listeBtnRadio[index].addEventListener("change", (event) => {
+      // Si c'est le premier élément qui a été modifié, alors nous voulons
+      // jouer avec la listeMots.
+      if (event.target.value === "1") {
+        listeProposition = listeMots;
+      } else {
+        // Sinon nous voulons jouer avec la liste des phrases
+        listeProposition = listePhrases;
+      }
+      // Et on modifie l'affichage en direct.
+      afficherProposition(listeProposition[i]);
+    });
   }
+  let form = document.querySelector("form");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    let scoreEmail = `${score} / ${i}`;
+    gererFormulaire(scoreEmail);
+  });
+
+  afficherResultat(score, i);
 }

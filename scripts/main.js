@@ -13,8 +13,7 @@ let btnValiderMot = document.getElementById("btnValiderMot");
 let divZoneproposition = document.querySelector(".zoneProposition");
 //console.log(divZoneproposition);
 
-
-// pour selectionner span de score on utilise querySelector 
+// pour selectionner span de score on utilise querySelector
 // pour selectionner la classe de la div on ecrit un point devant le nom de la classe
 // et pour selectionner le span on ecrit un espace et le nom de la balise span
 let spanScore = document.querySelector(".zoneScore span");
