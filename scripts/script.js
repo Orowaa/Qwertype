@@ -29,7 +29,7 @@ function afficherProposition(proposition) {
  * @param {string} score : le score.
  */
 function afficherEmail(nom, email, score) {
-  let mailto = `mailto:${email}?subject=Partage du score Quertype&body=Salut, je suis ${nom} et je viens de réaliser un score de ${score} sur le site de Quertype ! Essaye de faire mieux !`;
+  let mailto = `mailto:${email}?subject=Mon score sur Super Clavier⌨️🚀&body=Salut, C'est ${nom}, je viens de réaliser un score de ${score} sur le site de Super Clavier 😁 ! Essaye de faire mieux 😉`;
   location.href = mailto;
 }
 
