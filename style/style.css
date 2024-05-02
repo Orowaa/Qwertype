@@ -124,6 +124,12 @@ main {
   background-color: var(--color-secondary);
 }
 
+.minuteur {
+  margin: auto;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+}
 footer {
   position: sticky;
   bottom: 0;
