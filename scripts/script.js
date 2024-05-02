@@ -112,28 +112,37 @@ function lancerJeu() {
   let compteur = document.getElementById("compteur");
 
   let tempsRestant = 60;
-  tempsRestantEnSecondes = `${tempsRestant} s`;
   let compteurEnCours = false;
 
+
   inputEcriture.addEventListener("input", () => {
-    if (!compteurEnCours) {
-      compteurEnCours = true;
-      compteur.textContent = tempsRestant;
+  if (!compteurEnCours) {
+    compteurEnCours = true;
+    let tempsRestantEnSecondes = `${tempsRestant} s`;
+    compteur.textContent = tempsRestantEnSecondes;
 
-      let intervalId = setInterval(() => {
-        tempsRestant--;
-        compteur.textContent = tempsRestant;
+    let intervalId = setInterval(() => {
+      tempsRestant--;
+      tempsRestantEnSecondes = `${tempsRestant} s`;
+      compteur.textContent = tempsRestantEnSecondes;
 
-        if (tempsRestant <= 0) {
-          clearInterval(intervalId);
-          compteur.textContent = "Temps écoulé !";
-          compteurEnCours = false;
-          afficherProposition("Le jeu est fini");
-          btnValiderMot.disabled = true;
-        }
-      }, 1000);
-    }
-  });
+      if (tempsRestant <= 0) {
+        clearInterval(intervalId);
+        compteur.textContent = "Temps écoulé !";
+        compteurEnCours = false;
+        afficherProposition("Le jeu est fini");
+        btnValiderMot.disabled = true;
+      }
+    }, 1000);
+  }
+});
+
+inputEcriture.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault(); // Empêche l'envoi du formulaire
+    btnValiderMot.click();
+  }
+});
 
   afficherProposition(listeProposition[i]);
   // Gestion de l'événement click sur le bouton "valider"
