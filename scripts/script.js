@@ -43,7 +43,11 @@ function validerNom(nom) {
     throw new Error("Le nom est trop court");
   }
 }
-
+/**
+ *
+ * @param {*} email
+ * @throws {Error} si l'email n'est pas valide
+ */
 function validerEmail(email) {
   let emailRegExp = new RegExp(
     "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"
@@ -72,8 +76,8 @@ function gererFormulaire(scoreEmail) {
     let nom = baliseNom.value;
     validerNom(nom);
 
-    let balisEmail = document.getElementById("email");
-    let email = balisEmail.value;
+    let baliseEmail = document.getElementById("email");
+    let email = baliseEmail.value;
     validerEmail(email);
     afficherMessageErreur("");
     afficherEmail(nom, email, scoreEmail);
@@ -81,6 +85,15 @@ function gererFormulaire(scoreEmail) {
     // gestion d'erreurs
     afficherMessageErreur(erreur.message);
   }
+}
+
+function afficherTempsRestant(tempsRestant) {
+  // Récupération de la zone où on va afficher le temps restant
+  let spanTempsRestant = document.querySelector(".minuteur span");
+  // Ecriture du texte
+  let tempsRestantEnSecondes = `${tempsRestant} s`;
+  // On place le temps à l'intérieur du span
+  spanTempsRestant.innerText = tempsRestantEnSecondes;
 }
 
 /**
@@ -96,6 +109,31 @@ function lancerJeu() {
 
   let btnValiderMot = document.getElementById("btnValiderMot");
   let inputEcriture = document.getElementById("inputEcriture");
+  let compteur = document.getElementById("compteur");
+
+  let tempsRestant = 60;
+  tempsRestantEnSecondes = `${tempsRestant} s`;
+  let compteurEnCours = false;
+
+  inputEcriture.addEventListener("input", () => {
+    if (!compteurEnCours) {
+      compteurEnCours = true;
+      compteur.textContent = tempsRestant;
+
+      let intervalId = setInterval(() => {
+        tempsRestant--;
+        compteur.textContent = tempsRestant;
+
+        if (tempsRestant <= 0) {
+          clearInterval(intervalId);
+          compteur.textContent = "Temps écoulé !";
+          compteurEnCours = false;
+          afficherProposition("Le jeu est fini");
+          btnValiderMot.disabled = true;
+        }
+      }, 1000);
+    }
+  });
 
   afficherProposition(listeProposition[i]);
   // Gestion de l'événement click sur le bouton "valider"
