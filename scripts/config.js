@@ -22,6 +22,7 @@ const listeMots = [
   "Antonyme",
 ];
 
+// Déclaration du tableau contenant la liste des phrases proposées à l'utilisateur
 const listePhrases = [
   "La Bohême !",
   "Vers l'infini et au delà",
