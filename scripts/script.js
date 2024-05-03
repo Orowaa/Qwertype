@@ -57,6 +57,10 @@ function validerEmail(email) {
   }
 }
 
+/**
+ * Cette fonction affiche un message d'erreur dans la popup
+ * @param {string} message : le message d'erreur à afficher
+ */
 function afficherMessageErreur(message) {
   let spanErreurMessage = document.getElementById("erreurMessage");
 
@@ -70,6 +74,11 @@ function afficherMessageErreur(message) {
   spanErreurMessage.innerText = message;
 }
 
+/**
+ * cette fonction gère le formulaire de la popup et affiche l'email
+ * try catch pour gérer les erreurs de validation
+ * @param {*} scoreEmail
+ */
 function gererFormulaire(scoreEmail) {
   try {
     let baliseNom = document.getElementById("nom");
@@ -99,6 +108,7 @@ function afficherTempsRestant(tempsRestant) {
 /**
  * Cette fonction lance le jeu.
  * Elle demande à l'utilisateur de choisir entre "mots" et "phrases" et lance la boucle de jeu correspondante
+ * Elle gère également le temps restant pour jouer
  */
 function lancerJeu() {
   // Initialisations
@@ -114,35 +124,41 @@ function lancerJeu() {
   let tempsRestant = 60;
   let compteurEnCours = false;
 
-
   inputEcriture.addEventListener("input", () => {
-  if (!compteurEnCours) {
-    compteurEnCours = true;
-    let tempsRestantEnSecondes = `${tempsRestant} s`;
-    compteur.textContent = tempsRestantEnSecondes;
-
-    let intervalId = setInterval(() => {
-      tempsRestant--;
-      tempsRestantEnSecondes = `${tempsRestant} s`;
+    if (!compteurEnCours) {
+      compteurEnCours = true;
+      let tempsRestantEnSecondes = `${tempsRestant} s`;
       compteur.textContent = tempsRestantEnSecondes;
 
-      if (tempsRestant <= 0) {
-        clearInterval(intervalId);
-        compteur.textContent = "Temps écoulé !";
-        compteurEnCours = false;
-        afficherProposition("Le jeu est fini");
-        btnValiderMot.disabled = true;
-      }
-    }, 1000);
-  }
-});
+      let intervalId = setInterval(() => {
+        tempsRestant--;
+        tempsRestantEnSecondes = `${tempsRestant} s`;
+        compteur.textContent = tempsRestantEnSecondes;
 
-inputEcriture.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault(); // Empêche l'envoi du formulaire
-    btnValiderMot.click();
-  }
-});
+        if (tempsRestant <= 0) {
+          clearInterval(intervalId);
+          compteur.textContent = "Temps écoulé !";
+          compteurEnCours = false;
+          afficherProposition("Le jeu est fini");
+          btnValiderMot.disabled = true;
+        }
+      }, 1000);
+    }
+  });
+
+  /**
+   * cette fonction permet de valider le mot écrit par l'utilisateur en appuyant sur la touche "Entré" du clavier
+   * et si le temps restant est supérieur ou égal à 0
+   * @param {*} event
+   * @returns "Enter" pour valider le mot écrit par l'utilisateur
+   * @returns "preventDefault" pour empêcher l'envoi du formulaire
+   */
+  inputEcriture.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && tempsRestant >= 0) {
+      event.preventDefault(); // Empêche l'envoi du formulaire
+      btnValiderMot.click();
+    }
+  });
 
   afficherProposition(listeProposition[i]);
   // Gestion de l'événement click sur le bouton "valider"
