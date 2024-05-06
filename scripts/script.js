@@ -146,6 +146,7 @@ function lancerJeu() {
     }
   });
 
+
   /**
    * cette fonction permet de valider le mot écrit par l'utilisateur en appuyant sur la touche "Entré" du clavier
    * et si le temps restant est supérieur ou égal à 0
